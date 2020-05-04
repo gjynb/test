@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.RoleDao">
+
+    <insert id="saveUser" parameterType="com.example.springboot.entity.RoleInfo">
+        insert into t_sys_role
+            (id,
+            role_name,
+            is_deleted,
+            gmt_create,
+            create_by,
+            gmt_modified,
+            last_modified_by,
+            version,
+            )
+        values
+           (#{id},
+            #{roleName},
+            #{isDeleted},
+            now(),
+            #{createBy},
+            NOW(),
+            #{createBy},
+            0
+
+    </insert>
+    <update id="updateUser" parameterType="com.example.springboot.entity.RoleInfo">
+           update t_sys_role set role_name=#{roleName}  where id=#{id}
+   </update>
+
+    <select id="selectUser" parameterType="com.example.springboot.entity.SelectUser" resultType="com.example.springboot.entity.SelectUser" >
+         select user_acct,user_name,sex,role_name from t_sys_user t join t_role_user_middle tru on t.id=tru.user_id left join t_sys_role tr on tru.role_id=tr.id;
+    </select>
+    <update id="deleteUser" parameterType="com.example.springboot.entity.RoleInfo">
+        update t_sys_role set is_deleted=#{isDeleted} where  id=#{id}
+    </update>
+    <delete id="delUserAll" parameterType="com.example.springboot.entity.RoleInfo">
+        delete from t_sys_role where  id=#{id}
+
+    </delete>
+
+
+
+</mapper>

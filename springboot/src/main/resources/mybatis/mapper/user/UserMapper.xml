@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.springboot.dao.UserDao">
+
+    <insert id="saveUser" parameterType="com.example.springboot.entity.UserInfo">
+        insert into t_sys_user
+            (id,
+            user_acct,
+            user_name,
+            sex,
+            phone,
+            email,
+            id_card,
+            is_deleted,
+            sort_no,
+            gmt_create,
+            create_by,
+            gmt_modified,
+            last_modified_by,
+            version,
+            user_pwd
+            )
+        values
+           (#{id},
+            #{userAcct},
+            #{userName},
+            #{sex},
+            #{phone},
+            #{email},
+            #{idCard},
+            #{isDeleted},
+            0,
+            now(),
+            #{createBy},
+            NOW(),
+            #{createBy},
+            0,
+            #{userPwd})
+
+    </insert>
+    <update id="updateUser" parameterType="com.example.springboot.entity.UserInfo">
+           update t_sys_user set user_acct= #{userAcct} where id=1
+   </update>
+
+    <select id="selectUser" parameterType="com.example.springboot.entity.SelectUser" resultType="com.example.springboot.entity.SelectUser" >
+         select user_acct,user_name,sex,role_name from t_sys_user t join t_role_user_middle tru on t.id=tru.user_id left join t_sys_role tr on tru.role_id=tr.id;
+    </select>
+    <update id="deleteUser" parameterType="com.example.springboot.entity.UserInfo">
+        update t_sys_user set is_deleted=#{isDeleted} where  user_acct=#{userAcct}
+    </update>
+    <delete id="delUserAll" parameterType="com.example.springboot.entity.UserInfo">
+        delete from t_sys_user where  user_acct=#{userAcct}
+
+    </delete>
+
+
+
+</mapper>
